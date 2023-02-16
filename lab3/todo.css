@@ -1,0 +1,48 @@
+body {
+    background: #E8EBF3;
+    font: 400 16px 'Varela Round', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#checklist {
+    --background: #ffffff;
+    --text: #414856;
+    --check: #4F29F0;
+    --disabled: #C3C8DE;
+    --width: 100px;
+    --height: fit-content;
+    --border-radius: 10px;
+
+    background: var(--background);
+    width: var(--width);
+    height: var(--height);
+    border-radius: var(--border-radius);
+    position: relative;
+    box-shadow: 0 10px 30px #414856;
+    padding: 30px 45px;
+    display: inline-block;
+    grid-template-columns: 30px auto;
+    align-items: center;
+}
+
+.checklist-label {
+    color: var(--text);
+    position: relative;
+    cursor: pointer;
+    display: grid;
+    align-items: center;
+    width: fit-content;
+    transition: color 0.3s ease;
+}
+
+.checklist-item {
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: fit-content;
+}
