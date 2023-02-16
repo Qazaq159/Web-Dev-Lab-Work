@@ -1,69 +1,59 @@
-// let todoItems = []
-//
-// function addTodo(text) {
-//     const todo = {
-//         text,
-//         checked: false,
-//         id: Date.now(),
-//     };
-//
-//     todoItems.push(todo);
-//     renderTodo(todo);
-// }
-//
-//
-// const form = document.querySelector('.js-form');
-//
-// form.addEventListener('submit', event => {
-//    event.preventDefault();
-//    const input = document.querySelector('.js-todo-input');
-//    const text = input.value.trim();
-//    if(text != ''){
-//        addTodo(text);
-//        input.value = '';
-//        input.focus();
-//    }
-// });
-//
-// function renderTodo(todo){
-//     const list = document.querySelector('.js-todo-list');
-//     const isChecked = todo.checked ? 'done': '';
-//
-//     const node = document.createElement("li");
-//
-//     node.setAttribute("class", `todo-item ${isChecked}`);
-//     node.setAttribute("data-key", todo.id)
-//     node.innerHTML = `
-//     <input id="${todo.id}" type="checkbox"/>
-//     <label for="${todo.id}" class="tick js-tick"></label>
-//     <span>${todo.text}</span>
-//     <button class="delete-todo js-delete-todo" action="deleteTodo(${todo})">
-//     </button>`;
-//     list.append(node)
-// }
-
-function  crossItem(itemIndex){
-    let todoList = document.querySelector("#checklist");
-    let item = todoList.querySelector("li")
-    // let todoItemList = document.querySelector("#checklist");
-    // let item = todoItemList.getElementById(itemIndex);
-    // console.log(item.text);
-}
+todoItemsList = []
 
 function processItem(event) {
     event.preventDefault();
-    let todoItemText = document.getElementById("item-text").value;
+    let itemText = document.getElementById("item-text");
+    if(itemText.value.trim() === "")
+        alert("Empty");
+    else
+    {
+        todoItemsList.push({
+                task: itemText.value,
+                completed: false
+        });
+        itemText.value = "";
+        renderTask();
+    }
+}
 
-    let todoItemList = document.querySelector("#checklist");
-    let newIndex = todoItemList.getElementsByTagName("li").length;
+function renderTask(){
+    let checkList = document.getElementById("checklist");
+    checkList.innerHTML = "";
 
-    let node = document.createElement("li");
-    node.setAttribute("class", "checklist-item");
-    node.innerHTML = `
-        <input type="checkbox" onclick="crossItem(${newIndex})">
-        <del id="${newIndex}" style="display: none;">
-            <label id="${newIndex}" class="checklist-label">${todoItemText}</label>
-        </del>`
+    for(let i = 0; i < todoItemsList.length; i++){
+        let currentTodoItem = todoItemsList[i];
 
-    todoItemList.append(node);
+        let taskItem = document.createElement("li");
+        let taskText = document.createElement("span");
+        taskText.setAttribute("class", "todo-text-label");
+
+        let removeBtn = document.createElement("a");
+        let removeImg = document.createElement("img");
+
+        removeImg.setAttribute("src", "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAABa0lEQVR4nO2aS27CQAyG/0s04nGkcBG6bssB6LXoIWDBOQos6MrVVI4URSl4HvEY4U+KxMKJ/MmZ8UQGcBwnlRWAHYALAKp8nTmXNlbi00Dy9M+1jalEuOEK4A3AHPWZA3jnnEhamS8ODhLW+ODcwmt2lzMHz2CPGed2kgR376JVSJqfiyhBXhFjkFfkDmsADdJp+BlSJqnIK8ceEmUavpf4WdVEXgDsOf4YeZwZ3ittwJOtkRSZVInJF3uMTI6Eyq4lkcmVUNt+b8mUkFDtI2MypSTUG2J/Wz0Mfuf0nCqdvV+FEpUwJVLis5n81YpkbGHnnABMbL/9NVFKhrQb4tjCLiFDmkeUW7tTrgxpHRolW2yODGkc42P6RKoM+YfVM3zq1oBcxBjkFTEGPV1FThxoYeQ2ZMm5fUPAjoPDzM4am5jRW9sbhoaZ3QL1WbDED+cmHlNvByPhhxxPd7Rcwm44+pB/GHAcB3/8AsupkxGNr4djAAAAAElFTkSuQmCC");
+        removeImg.setAttribute("class", "remove-img");
+
+        removeBtn.appendChild(removeImg);
+        removeBtn.onclick = function (){
+            todoItemsList.splice(i, 1);
+            renderTask();
+        }
+
+        taskText.textContent = currentTodoItem.task;
+
+        taskItem.appendChild(removeBtn);
+        taskItem.appendChild(taskText);
+
+        if(currentTodoItem.completed){
+            taskText.style.textDecoration = "line-through";
+            taskText.style.fontWeight = "normal";
+        }
+
+        taskItem.onclick = function () {
+            currentTodoItem.completed = !currentTodoItem.completed;
+            renderTask();
+        }
+        taskItem.setAttribute("class", "checklist-item");
+        checkList.appendChild(taskItem);
+    }
 }

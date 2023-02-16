@@ -6,14 +6,14 @@
     <link rel="stylesheet" href="todo.css">
 </head>
 <body>
-<ul id="checklist">
-</ul>
-<div style="display: inline-block;">
-    <form >
-        <input type="text" placeholder="insert item" id="item-text">
-        <button type="submit" id="add-button" onclick="processItem(event)">Add</button>
+<h1 style="font-size: 60px; color: #414856;">To Do List</h1>
+<div style="display: inline-block;" class="checklist-label">
+    <form class="add-todo-label">
+        <input type="text" placeholder="Insert item" id="item-text" class="input-label">
+        <button class="button-6" type="submit" id="add-button" onclick="processItem(event)">Add</button>
     </form>
 </div>
+<ul id="checklist" class="checklist-label"></ul>
 <script src="todo.js"></script>
 </body>
 </html>
